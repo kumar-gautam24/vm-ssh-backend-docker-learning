@@ -6,6 +6,8 @@ import (
 	"log"
 	"os"
 
+	"strconv"
+
 	_ "github.com/mattn/go-sqlite3"
 )
 
@@ -44,6 +46,54 @@ func main() {
 				log.Fatal(err)
 			}
 			fmt.Println("Task added successfully")
+		}
+
+	} else if arg == "list" {
+		rows, err := db.Query("select * from tasks")
+		if err != nil {
+			log.Fatal(err)
+		}
+		defer rows.Close()
+
+		for rows.Next() {
+			var id int
+			var title string
+			var done bool
+			var created_at string
+			if err := rows.Scan(&id, &title, &done, &created_at); err != nil {
+				log.Fatal(err)
+			}
+			fmt.Println(id, title, done, created_at)
+		}
+
+	} else if arg == "done" {
+
+		if len(os.Args) < 3 {
+			log.Fatal("Command usage done <id>")
+		}
+		var stringVlaue string = os.Args[2]
+		id, err := strconv.Atoi(stringVlaue)
+		if err != nil {
+			log.Fatal(err)
+		}
+		_, err = db.Exec("UPDATE tasks SET done =1 WHERE id=?", id)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+	} else if arg == "delete" {
+
+		if len(os.Args) < 3 {
+			log.Fatal("Command usage done <id>")
+		}
+		var stringVlaue string = os.Args[2]
+		id, err := strconv.Atoi(stringVlaue)
+		if err != nil {
+			log.Fatal(err)
+		}
+		_, err = db.Exec("DELETE FROM tasks WHERE id=?", id)
+		if err != nil {
+			log.Fatal(err)
 		}
 
 	}
