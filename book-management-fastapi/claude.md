@@ -34,10 +34,11 @@ Timeline: ~3 days to get CRUD-ready with best practices. PM walkthrough coming s
 - Python basics: variables, type hints, data structures, functions, classes, error handling, imports, venv
 - Pydantic fundamentals: BaseModel, type coercion, validation, field declarations
 - Conceptual understanding of FastAPI decorators, routing, path/query params
+- Day 1 DONE: Full CRUD API (POST/GET/PUT/DELETE /books) with in-memory list, Pydantic models, HTTPException 404s, query params (author filter, title search)
+- Understands: decorators, route registration, type-hint-based dependency injection, list comprehensions, enumerate
 
 ### What I need to build NOW:
-- Phase 2: Three-route user API (POST /users, GET /users, GET /users/{id}) with Pydantic models
-- Phase 3: Database integration with SQLAlchemy (PostgreSQL or SQLite)
+- Phase 3: Database integration with SQLAlchemy (SQLite first, PostgreSQL later)
 - Phase 4: Production project structure (routers, schemas, services, dependency injection)
 - Phase 5: Payment integration module specifics
 
