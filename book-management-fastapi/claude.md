@@ -35,12 +35,18 @@ Timeline: ~3 days to get CRUD-ready with best practices. PM walkthrough coming s
 - Pydantic fundamentals: BaseModel, type coercion, validation, field declarations
 - Conceptual understanding of FastAPI decorators, routing, path/query params
 - Day 1 DONE: Full CRUD API (POST/GET/PUT/DELETE /books) with in-memory list, Pydantic models, HTTPException 404s, query params (author filter, title search)
-- Understands: decorators, route registration, type-hint-based dependency injection, list comprehensions, enumerate
+- Day 2 DONE: SQLAlchemy + SQLite (engine, session, Base, models, CRUD via ORM), Alembic migrations, separate schemas (BookCreate/BookResponse), response_model
+- Day 3 DONE: Production structure (routers/, utils/crud.py, schemas.py, models.py, database.py), Dockerfile, .dockerignore, deployed to VM via Docker
+- Understands: decorators, route registration, type-hint-based dependency injection, list comprehensions, enumerate, ORM basics, Depends(), session lifecycle, migration workflow
+- GAPS: Router concept (why/how APIRouter replaces app), deeper Depends() understanding, SQL fundamentals (JOINs, relationships, indexes)
 
-### What I need to build NOW:
-- Phase 3: Database integration with SQLAlchemy (SQLite first, PostgreSQL later)
-- Phase 4: Production project structure (routers, schemas, services, dependency injection)
-- Phase 5: Payment integration module specifics
+### What I need to learn DEEPLY (concepts, not just copy-paste):
+- How APIRouter works and why it replaces @app routes
+- Dependency injection pattern in detail (Depends, yield, lifecycle)
+- SQLAlchemy relationships (one-to-many, many-to-many)
+- SQL fundamentals (JOINs, indexes, relationships)
+- Authentication basics
+- Payment integration module specifics
 
 ### FastAPI + SQL learning requirements:
 - Routes, request/response handling, Pydantic models, CRUD operations
@@ -146,23 +152,54 @@ RESPONSE: Keep me on the current task. Change the PROJECT not the subject when b
 - No copy-pasting code you don't understand — explain what each line does if asked
 
 ## CURRENT IMMEDIATE TASK
-Build a FastAPI book management CRUD API in book-management-fastapi/main.py:
-1. POST /books — create book with Pydantic model (title, author, year, price)
-2. GET /books — list all books
-3. GET /books/{book_id} — get one book, 404 if not found
-4. PUT /books/{book_id} — update a book, 404 if not found
-5. DELETE /books/{book_id} — delete a book, 404 if not found
-6. Store in a Python list for now (no DB yet)
-7. Run with: uvicorn main:app --reload
-8. Test via /docs (Swagger UI)
-9. After basic CRUD works: add query params (filter by author, search by title)
+- Systematic FastAPI learning following official tutorial structure
+- Focus on deep conceptual understanding, not speed
+- Every concept: problem first → fail → introduce solution → example → tweak → build task
+- Reference: https://fastapi.tiangolo.com/tutorial/ (tutorial) + /advanced/ (advanced)
 
-## PROJECT STRUCTURE (current — will evolve)
+### FastAPI Tutorial Progress (following docs structure):
+- [x] First Steps — app, routes, decorators
+- [x] Path Parameters — path params, type hints
+- [x] Query Parameters — optional params, defaults
+- [x] Query Parameter Validation — Query(), min/max, Annotated pattern
+- [x] Path Parameter Validation — Path(), gt/lt constraints
+- [x] Request Body — Pydantic models as body
+- [ ] Request Body + Path + Query params together
+- [ ] Body — Nested Models, Field(), complex validation
+- [ ] Cookie/Header Parameters
+- [x] Response Model — response_model, from_attributes
+- [ ] Extra Models — multiple schemas per resource, inheritance patterns
+- [ ] Form Data
+- [ ] Request Files
+- [x] Error Handling — HTTPException basics
+- [ ] Error Handling — custom exception handlers, RequestValidationError
+- [ ] Path Operation Configuration — tags, summary, description, deprecated
+- [x] Dependencies (Depends) — basics, yield
+- [ ] Dependencies — classes as dependencies, sub-dependencies, global deps
+- [ ] Security — OAuth2, JWT, password hashing
+- [ ] Middleware
+- [ ] CORS
+- [x] SQL Database — SQLAlchemy, sessions, CRUD
+- [x] Project Structure — routers (APIRouter)
+- [ ] Background Tasks
+- [ ] Testing — pytest, TestClient
+
+## PROJECT STRUCTURE (current)
 ```
 book-management-fastapi/
-├── CLAUDE.md
-├── main.py          ← start here, single file
-├── venv/            ← gitignored
-└── requirements.txt ← pip freeze > requirements.txt after installing
+├── main.py          ← app setup, router registration
+├── database.py      ← engine, session, Base, get_db
+├── models.py        ← SQLAlchemy table models
+├── schemas.py       ← Pydantic request/response models
+├── routers/
+│   ├── __init__.py
+│   └── books.py     ← all book CRUD routes
+├── utils/
+│   └── crud.py      ← reusable DB helper functions
+├── alembic/         ← migration scripts
+├── alembic.ini
+├── Dockerfile
+├── .dockerignore
+├── requirements.txt
+└── .venv/           ← gitignored
 ```
-Later (Phase 4) we'll refactor into routers/, models/, schemas/, services/, database.py
