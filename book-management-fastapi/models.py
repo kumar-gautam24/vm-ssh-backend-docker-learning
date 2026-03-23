@@ -9,5 +9,6 @@ class Book(Base):
     id: Mapped[int]= mapped_column(Integer,primary_key=True,index=True)
     title:Mapped[str]=mapped_column(String(100),nullable=False)
     author:Mapped[str]=mapped_column(String(100),nullable=False)
+    description:Mapped[str]=mapped_column(String(500),nullable=True)
     year:Mapped[int]=mapped_column(Integer,nullable=False)
     price:Mapped[float]=mapped_column(Float,nullable=False)
