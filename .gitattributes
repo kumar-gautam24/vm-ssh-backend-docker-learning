@@ -1,0 +1,10 @@
+# ─── Committed Python virtualenv ───────────────────────────────────────────
+# fastAPi/venv holds 2,475 of this repo's 2,521 files: third-party
+# site-packages, not authored here. Without this override Linguist attributes
+# ~23.4 MB of Python -- plus 402 KB of "Cython" from .pyx files inside
+# site-packages -- to this repo, which then dominates profile language stats.
+#
+# The real fix is `git rm -r --cached fastAPi/venv` plus a .gitignore entry;
+# this override is the mitigation that does not rewrite history.
+fastAPi/venv/**     linguist-vendored=true
+**/__pycache__/**   linguist-generated=true
